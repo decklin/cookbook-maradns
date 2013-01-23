@@ -48,11 +48,5 @@ template '/etc/maradns/mararc' do
   notifies :restart, 'service[maradns]'
 end
 
-# be sure to create the db.domain template.
-template "/etc/maradns/db.#{node[:domain]}" do
-  source "db.#{node[:domain]}.erb"
-  mode 0644
-  owner 'root'
-  group 'root'
-  notifies :restart, 'service[maradns]'
-end
+# Be sure to create a data bag or cookbook file for your domain
+maradns_zone node[:domain]

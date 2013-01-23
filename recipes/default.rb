@@ -39,6 +39,10 @@ template '/etc/maradns/mararc' do
   mode 0644
   owner 'root'
   group 'root'
+  variables(
+    :zones => [node[:domain]],
+    :bind_addresses => node[:maradns][:bind_addresses] || [node[:ipaddress]]
+  )
   notifies :restart, 'service[maradns]'
 end
 

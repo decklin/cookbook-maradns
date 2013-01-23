@@ -19,7 +19,7 @@
 
 package 'maradns' do
   action :upgrade
-end
+end.run_action(:install)
 
 service 'maradns' do
   action :enable
@@ -41,7 +41,9 @@ template '/etc/maradns/mararc' do
   group 'root'
   variables(
     :zones => [node[:domain]],
-    :bind_addresses => node[:maradns][:bind_addresses] || [node[:ipaddress]]
+    :bind_addresses => node[:maradns][:bind_addresses] || [node[:ipaddress]],
+    :uid => `getent passwd maradns | cut -d: -f3`.chomp,
+    :gid => `getent group maradns | cut -d: -f3`.chomp
   )
   notifies :restart, 'service[maradns]'
 end

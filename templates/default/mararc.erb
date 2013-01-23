@@ -10,8 +10,8 @@ csv2["<%= zone %>."] = "db.<%= zone %>"
 <% end -%>
 bind_address = "<%= @bind_addresses.join(',') %>"
 chroot_dir = "/etc/maradns"
-maradns_uid = 109
-maradns_gid = 109
+maradns_uid = <%= @uid %>
+maradns_gid = <%= @gid %>
 maxprocs = 96
 no_fingerprint = 0
 default_rrany_set = 3

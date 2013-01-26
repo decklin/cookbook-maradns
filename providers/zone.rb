@@ -13,7 +13,6 @@ action :create do
       cookbook 'maradns'
       mode '0644'
       variables :records => records
-      notifies :restart, 'service[maradns]'
     end
   else
     cookbook_file "/etc/maradns/db.#{new_resource.zone}" do
@@ -22,6 +21,7 @@ action :create do
     end
   end
   node.run_state[:maradns_zones] << new_resource.zone
+  notifies :create, 'template[/etc/maradns/mararc]'
 end
 
 action :delete do
@@ -29,4 +29,5 @@ action :delete do
     action :delete
     notifies :restart, 'service[maradns]'
   end
+  notifies :create, 'template[/etc/maradns/mararc]'
 end

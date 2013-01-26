@@ -21,6 +21,7 @@ action :create do
       mode '0644'
     end
   end
+  node.run_state[:maradns_zones] << new_resource.zone
 end
 
 action :delete do

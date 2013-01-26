@@ -5,7 +5,7 @@
 ##
 
 csv2 = {}
-<% @zones.each do |zone| -%>
+<% node.run_state[:maradns_zones].each do |zone| -%>
 csv2["<%= zone %>."] = "db.<%= zone %>"
 <% end -%>
 bind_address = "<%= @bind_addresses.join(',') %>"

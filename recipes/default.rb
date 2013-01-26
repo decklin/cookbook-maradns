@@ -34,13 +34,14 @@ service 'zoneserver' do
   supports restart: true
 end
 
+node.run_state[:maradns_zones] = []
+
 template '/etc/maradns/mararc' do
   source 'mararc.erb'
   mode 0644
   owner 'root'
   group 'root'
   variables(
-    :zones => [node[:domain]],
     :bind_addresses => node[:maradns][:bind_addresses] || [node[:ipaddress]],
     :uid => `getent passwd maradns | cut -d: -f3`.chomp,
     :gid => `getent group maradns | cut -d: -f3`.chomp

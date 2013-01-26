@@ -46,7 +46,15 @@ template '/etc/maradns/mararc' do
     :uid => `getent passwd maradns | cut -d: -f3`.chomp,
     :gid => `getent group maradns | cut -d: -f3`.chomp
   )
-  notifies :restart, 'service[maradns]'
+  notifies :run, 'ruby_block[notify maradns restart]'
+end
+
+ruby_block 'notify maradns restart' do
+  action :nothing
+  block do
+    Chef::Log.debug "delaying delayed restart of maradns in case we also updated any zone resources"
+  end
+  notifies :restart, resources(:service => "maradns")
 end
 
 # Be sure to create a data bag or cookbook file for your domain

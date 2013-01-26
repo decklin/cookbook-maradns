@@ -20,8 +20,12 @@ action :create do
       mode '0644'
     end
   end
-  node.run_state[:maradns_zones] << new_resource.zone
-  notifies :create, 'template[/etc/maradns/mararc]'
+  ruby_block "rewrite mararc after adding #{new_resource.zone}" do
+    block do
+      node.run_state[:maradns_zones] << new_resource.zone
+    end
+    notifies :create, 'template[/etc/maradns/mararc]'
+  end
 end
 
 action :delete do
@@ -29,5 +33,10 @@ action :delete do
     action :delete
     notifies :restart, 'service[maradns]'
   end
-  notifies :create, 'template[/etc/maradns/mararc]'
+  ruby_block "rewrite mararc after removing #{new_resource.zone}" do
+    block do
+      node.run_state[:maradns_zones].delete(new_resource.zone)
+    end
+    notifies :create, 'template[/etc/maradns/mararc]'
+  end
 end

@@ -14,4 +14,5 @@
 # limitations under the License.
 #
 
-default[:maradns][:recursive_acl] = ''
+default[:maradns][:recursive_acl] = []
+default[:maradns][:zone_transfer_acl] = []

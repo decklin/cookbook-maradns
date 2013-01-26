@@ -30,4 +30,5 @@ verbose_level = 1
 # The following line must be uncommented to enable recursive queries
 root_servers = {}
 
-recursive_acl = "<%= node[:maradns][:recursive_acl] %>"
+recursive_acl = "<%= Array(node[:maradns][:recursive_acl]).join(', ') %>"
+zone_transfer_acl = "<%= node[:maradns][:zone_transfer_acl].join(', ') %>"

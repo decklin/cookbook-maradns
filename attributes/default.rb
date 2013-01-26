@@ -14,5 +14,7 @@
 # limitations under the License.
 #
 
+default[:maradns][:synth_soa_serial] = 1
+
 default[:maradns][:recursive_acl] = []
 default[:maradns][:zone_transfer_acl] = []

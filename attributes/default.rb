@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+default[:maradns][:enable_tcp_zoneserver] = false
+
 default[:maradns][:synth_soa_serial] = 1
 
 default[:maradns][:recursive_acl] = []

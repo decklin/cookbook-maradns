@@ -30,7 +30,7 @@ service 'maradns' do
 end
 
 service 'zoneserver' do
-  action :disable
+  action node[:maradns][:enable_tcp_zoneserver] ? :disable : :enable
   supports restart: true
 end
 

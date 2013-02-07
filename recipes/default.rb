@@ -56,6 +56,3 @@ ruby_block 'notify maradns restart' do
   end
   notifies :restart, 'service[maradns]'
 end
-
-# Be sure to create a data bag or cookbook file for your domain
-maradns_zone node[:domain]

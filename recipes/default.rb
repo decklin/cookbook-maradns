@@ -46,7 +46,7 @@ template '/etc/maradns/mararc' do
     :uid => `getent passwd maradns | cut -d: -f3`.chomp,
     :gid => `getent group maradns | cut -d: -f3`.chomp
   )
-  notifies :run, 'ruby_block[notify maradns restart]'
+  notifies :create, 'ruby_block[notify maradns restart]'
 end
 
 ruby_block 'notify maradns restart' do

@@ -29,7 +29,7 @@ service 'maradns' do
   )
 end
 
-service 'zoneserver' do
+service 'maradns-zoneserver' do
   action node[:maradns][:enable_tcp_zoneserver] ? :disable : :enable
   supports restart: true
 end
@@ -54,7 +54,7 @@ ruby_block 'notify maradns restart' do
   block do
     Chef::Log.debug "delaying delayed restart of maradns in case we also updated any zone resources"
   end
-  notifies :restart, resources(:service => "maradns")
+  notifies :restart, 'service[maradns]'
 end
 
 # Be sure to create a data bag or cookbook file for your domain
